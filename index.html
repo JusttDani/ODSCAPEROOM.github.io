@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fondo Sur vs ODS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Roboto:wght@900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-blue: #00f3ff;
+            --neon-red: #ff003c;
+            --neon-green: #39ff14;
+            --dark-bg: #050505;
+            --font-size-huge: 5.5vh;
+            --font-size-medium: 3.5vh;
+            --font-size-small: 2.2vh;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #050505 0%, #1a0033 100%);
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+        }
+
+        #main-layout {
+            display: flex;
+            gap: 20px;
+            width: 85vw; 
+            height: 80vh;
+        }
+
+        #game-wrapper {
+            flex: 3;
+            background: rgba(0, 0, 0, 0.9);
+            border: 6px solid var(--neon-blue);
+            border-radius: 30px;
+            padding: 4vh;
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            box-shadow: 0 0 50px rgba(0, 243, 255, 0.3);
+            position: relative;
+        }
+
+        p { 
+            font-size: var(--font-size-medium); 
+            line-height: 1.3; 
+            margin: auto 0;
+            color: #fff;
+            font-weight: 900;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        h1 { 
+            font-family: 'Righteous', cursive; 
+            font-size: var(--font-size-huge); 
+            color: var(--neon-red); 
+            margin-bottom: 1vh;
+            text-transform: uppercase;
+            text-shadow: 0 0 20px var(--neon-red);
+        }
+
+        h2 { 
+            font-family: 'Righteous', cursive; 
+            font-size: var(--font-size-medium); 
+            color: var(--neon-green);
+            margin-bottom: 1vh;
+        }
+
+        #hud {
+            font-family: 'Righteous', cursive;
+            font-size: var(--font-size-small);
+            color: var(--neon-blue);
+            margin-bottom: 1vh;
+            letter-spacing: 2px;
+        }
+
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5vh;
+            width: 100%;
+            margin-top: auto;
+        }
+
+        button {
+            background: #fff;
+            border: none;
+            padding: 1.8vh;
+            color: #000;
+            font-weight: 900;
+            font-size: var(--font-size-small);
+            border-radius: 15px;
+            cursor: pointer;
+            font-family: 'Righteous', cursive;
+            text-transform: uppercase;
+            transition: all 0.2s;
+        }
+
+        button:hover { transform: scale(1.02); background: var(--neon-blue); color: #000; }
+
+        .btn-next { background: var(--neon-red); color: white; margin-top: 2vh; }
+
+        #leaderboard-wrapper {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.85);
+            border: 3px solid var(--neon-green);
+            border-radius: 20px;
+            padding: 2vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .lb-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1vh;
+            margin-bottom: 1vh;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            font-size: calc(var(--font-size-small) * 0.8);
+            border-left: 5px solid var(--neon-green);
+        }
+
+        .hidden { display: none !important; }
+        .fade-in { animation: fadeIn 0.4s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .flash-red { animation: flashR 0.5s; }
+        @keyframes flashR { 0% { border-color: var(--neon-red); } 100% { border-color: var(--neon-blue); } }
+    </style>
+</head>
+<body>
+
+    <div id="main-layout">
+        <div id="game-wrapper">
+            <div id="hud">AGENDA 2030 SCORE: <span id="current-score">0</span></div>
+
+            <div id="start-screen" class="fade-in" style="height:100%; display:flex; flex-direction:column;">
+                <h1>FONDO SUR VS ODS</h1>
+                <p>Bienvenido al DLC más polémico. Perro Sanxe ha activado la Agenda 2030 y solo Kevin & Ana pueden salvarnos (o hundirnos más). <br><br>Raúl, demuestra que sabes más de los ODS que de grindr.</p>
+                <div class="btn-group"><button onclick="startGame()">☢️ ACTIVAR PROTOCOLO</button></div>
+            </div>
+
+            <div id="question-screen" class="hidden fade-in" style="height:100%; display:flex; flex-direction:column;">
+                <h2 id="q-title"></h2>
+                <p id="q-desc"></p>
+                <div id="q-options" class="btn-group"></div>
+            </div>
+
+            <div id="consequence-screen" class="hidden fade-in" style="height:100%; display:flex; flex-direction:column;">
+                <h1 id="c-title"></h1>
+                <p id="c-desc"></p>
+                <div class="btn-group"><button class="btn-next" onclick="nextLevel()">SIGUIENTE ODS ➡️</button></div>
+            </div>
+
+            <div id="final-screen" class="hidden fade-in" style="height:100%; display:flex; flex-direction:column;">
+                <h1>🏁 BALANCE FINAL</h1>
+                <div id="final-result-content"></div>
+                <div class="btn-group"><button class="btn-next" onclick="resetGame()">🔄 REINICIAR DICTADURA</button></div>
+            </div>
+        </div>
+
+        <div id="leaderboard-wrapper">
+            <h2 style="color:var(--neon-green); font-size: 2.5vh; text-align:center;">📊 HISTORIAL</h2>
+            <div id="lb-list"></div>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                title: "ODS 13: ACCIÓN POR EL CLIMA",
+                desc: "Sánchez anuncia que el Falcon ahora funciona con lágrimas de la oposición. ¿Cuál es el objetivo real del ODS 13 antes de 2030?",
+                options: [
+                    { text: "Reducir emisiones un 45% respecto a 2010", points: 50, cons: "¡Correcto! Te has ganado un pin de la Agenda 2030 y un viaje en Blablacar (porque el Falcon es solo para él)." },
+                    { text: "Que Kevin deje de usar laca", points: -20, cons: "El agujero de la capa de ozono sobre Fondo Sur dice que esa opción era la correcta moralmente, pero no técnicamente." },
+                    { text: "Poner ventiladores gigantes en el Estrecho", points: -50, cons: "Greta Thunberg te acaba de mirar muy mal. Has acelerado el deshielo un 15%." }
+                ]
+            },
+            {
+                title: "ODS 14: VIDA SUBMARINA",
+                desc: "Ana encuentra un microplástico en su sushi. Según el ODS 14, ¿qué porcentaje de océanos debe estar protegido?",
+                options: [
+                    { text: "Al menos el 30% (Objetivo 30x30)", points: 50, cons: "¡Nivel Experto! Los peces te lo agradecen. Kevin dice que él prefiere proteger la vida nocturna." },
+                    { text: "Lo que diga el pulpo Paul", points: -30, cons: "Esa referencia es más vieja que los chistes de Raúl. Los corales han muerto de cringe." },
+                    { text: "Solo las zonas donde Sánchez veranea", points: 10, cons: "Políticamente acertado, ecológicamente un desastre. El Mediterráneo es ahora un vertedero de purpurina." }
+                ]
+            },
+            {
+                title: "ODS 15: VIDA DE ECOSISTEMAS TERRESTRES",
+                desc: "Se está desertificando hasta el jardín de Ana. ¿Qué busca detener este ODS principalmente?",
+                options: [
+                    { text: "La degradación de tierras y pérdida de biodiversidad", points: 50, cons: "¡Muy bien! Has salvado a tres linces ibéricos y a una maceta de Kevin." },
+                    { text: "Que la gente deje de plantar cara a Sánchez", points: -10, cons: "Eso es el ODS 15 'Versión Moncloa'. No puntúa aquí, facha." },
+                    { text: "Convertir el Sáhara en un campo de golf", points: -60, cons: "Has provocado una tormenta de arena que ha llegado hasta Fondo Sur. Ana no ve nada." }
+                ]
+            },
+            {
+                title: "ODS 16: PAZ Y JUSTICIA",
+                desc: "Instituciones sólidas... ¿Qué es más sólido ahora mismo?",
+                options: [
+                    { text: "Reducir significativamente la corrupción y el soborno", points: 50, cons: "¡Bingo! Pero Sánchez se está riendo en tu cara desde el Falcon." },
+                    { text: "La gomina de Kevin en un día de levante", points: 20, cons: "Eso es físicamente indestructible. Casi tan sólido como una dictadura caribeña." },
+                    { text: "La paciencia de Raúl esperando un match", points: -40, cons: "Eso es lo más frágil del mundo. Has provocado un golpe de estado por error." }
+                ]
+            },
+            {
+                title: "ODS 17: ALIANZAS PARA LOS OBJETIVOS",
+                desc: "DLC Kevin & Ana: Se alían para dominar el mundo. ¿Qué es clave en el ODS 17?",
+                options: [
+                    { text: "Fomentar la cooperación Norte-Sur y Sur-Sur", points: 50, cons: "¡Exacto! Aunque en este caso es más Alianza Fondo Sur - Cocina de Ana." },
+                    { text: "Que todos nos llevemos bien y Sánchez pague la cena", points: 10, cons: "Utopía pura. Te sobran ganas pero te falta presupuesto." },
+                    { text: "Compartir la contraseña del Netflix", points: -20, cons: "Eso rompe los términos de servicio y la economía global. El ODS 17 se autodestruye." }
+                ]
+            }
+        ];
+
+        let score = 0;
+        let currentLevel = 0;
+        let attempt = 0;
+
+        function startGame() {
+            score = 0;
+            currentLevel = 0;
+            document.getElementById('current-score').innerText = score;
+            showScreen('question-screen');
+            loadLevel();
+        }
+
+        function loadLevel() {
+            const q = questions[currentLevel];
+            document.getElementById('q-title').innerText = q.title;
+            document.getElementById('q-desc').innerText = q.desc;
+            const opts = document.getElementById('q-options');
+            opts.innerHTML = '';
+            q.options.forEach(o => {
+                const b = document.createElement('button');
+                b.innerText = o.text;
+                b.onclick = () => selectOption(o);
+                opts.appendChild(b);
+            });
+        }
+
+        function selectOption(o) {
+            score += o.points;
+            document.getElementById('current-score').innerText = score;
+            document.getElementById('c-title').innerText = o.points >= 40 ? "¡COMPROMISO TOTAL!" : "¡SABOTAJE!";
+            document.getElementById('c-desc').innerText = o.cons;
+            
+            const wrapper = document.getElementById('game-wrapper');
+            wrapper.classList.remove('flash-red');
+            void wrapper.offsetWidth;
+            wrapper.classList.add('flash-red');
+
+            showScreen('consequence-screen');
+        }
+
+        function nextLevel() {
+            currentLevel++;
+            if (currentLevel < questions.length) {
+                showScreen('question-screen');
+                loadLevel();
+            } else {
+                finishGame();
+            }
+        }
+
+        function finishGame() {
+            attempt++;
+            showScreen('final-screen');
+            let rank = "";
+            if (score >= 200) rank = "MINISTRO DE AGENDA 2030 🌍";
+            else if (score >= 50) rank = "CIUDADANO MEDIO CONFUSO 😐";
+            else rank = "ENEMIGO PÚBLICO DEL CLIMA 💀";
+
+            document.getElementById('final-result-content').innerHTML = `
+                <h2 style="font-size:6vh; color:var(--neon-green);">${rank}</h2>
+                <p>PUNTOS DE SOSTENIBILIDAD: ${score}</p>
+                <p style="font-size:2vh;">Sánchez te está observando.</p>
+            `;
+            updateLeaderboard();
+        }
+
+        function updateLeaderboard() {
+            const list = document.getElementById('lb-list');
+            const item = document.createElement('div');
+            item.className = 'lb-item fade-in';
+            item.innerHTML = `<span>Run #${attempt}</span> <span>${score} PTS</span>`;
+            list.prepend(item);
+        }
+
+        function showScreen(id) {
+            document.querySelectorAll('#game-wrapper > div:not(#hud)').forEach(s => s.classList.add('hidden'));
+            document.getElementById(id).classList.remove('hidden');
+        }
+
+        function resetGame() {
+            startGame();
+        }
+    </script>
+</body>
+</html>
