@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fondo Sur vs ODS - DLC Kevin & Ana</title>
+    <title>Fondo Sur: ODS & Dictaduras DLC</title>
     <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Roboto:wght@900&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -12,8 +12,8 @@
             --neon-green: #39ff14;
             --dark-bg: #050505;
             --font-size-huge: 5.5vh;
-            --font-size-medium: 3.8vh;
-            --font-size-small: 2.5vh;
+            --font-size-medium: 3.5vh;
+            --font-size-small: 2.2vh;
         }
 
         * { box-sizing: border-box; }
@@ -46,9 +46,8 @@
 
         p { 
             font-size: var(--font-size-medium); 
-            line-height: 1.4; margin: auto 0;
+            line-height: 1.3; margin: auto 0;
             font-weight: 900; text-align: center;
-            word-spacing: 0.5vw;
         }
 
         h1 { 
@@ -57,14 +56,12 @@
             color: var(--neon-red); 
             margin-bottom: 1vh;
             text-transform: uppercase;
-            text-shadow: 0 0 20px var(--neon-red);
         }
 
         h2 { 
             font-family: 'Righteous', cursive; 
             font-size: var(--font-size-medium); 
             color: var(--neon-green);
-            margin-bottom: 1vh;
         }
 
         #hud {
@@ -72,25 +69,24 @@
             font-size: var(--font-size-small);
             color: var(--neon-blue);
             margin-bottom: 1vh;
-            opacity: 0.8;
         }
 
         .btn-group {
             display: flex; flex-direction: column;
-            gap: 1.5vh; width: 100%;
+            gap: 1.2vh; width: 100%;
             margin-top: auto;
         }
 
         button {
             background: #fff; border: none;
-            padding: 2vh; color: #000;
-            font-weight: 900; font-size: var(--font-size-small);
-            border-radius: 20px; cursor: pointer;
+            padding: 1.8vh; color: #000;
+            font-weight: 900; font-size: calc(var(--font-size-small) * 1.1);
+            border-radius: 15px; cursor: pointer;
             font-family: 'Righteous', cursive;
             text-transform: uppercase; transition: all 0.2s;
         }
 
-        button:hover { transform: scale(1.03); background: var(--neon-blue); }
+        button:hover { transform: scale(1.02); background: var(--neon-blue); }
 
         .btn-next { background: var(--neon-red); color: white; margin-top: 2vh; }
 
@@ -104,7 +100,7 @@
 
         .lb-item {
             background: rgba(255, 255, 255, 0.1);
-            padding: 1vh; margin-bottom: 1vh;
+            padding: 0.8vh; margin-bottom: 0.8vh;
             border-radius: 10px; display: flex;
             justify-content: space-between;
             font-size: calc(var(--font-size-small) * 0.8);
@@ -113,28 +109,19 @@
         .hidden { display: none !important; }
         .fade-in { animation: fadeIn 0.4s ease-in; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        
-        .dlc-tag {
-            color: var(--neon-red);
-            font-size: 0.5em;
-            vertical-align: middle;
-            border: 2px solid var(--neon-red);
-            padding: 2px 5px;
-            border-radius: 5px;
-        }
     </style>
 </head>
 <body>
 
     <div id="main-layout">
         <div id="game-wrapper">
-            <div id="hud">AGENDA 2030 STATUS: <span id="current-score">0</span> PTS</div>
+            <div id="hud">VOTOS ESCRUTADOS (CNE): <span id="current-score">0</span>%</div>
 
             <div id="start-screen" class="fade-in" style="height:100%; display:flex; flex-direction:column;">
-                <h1>FONDO SUR VS ODS</h1>
-                <h2>DLC KEVIN & ANA <span class="dlc-tag">ACTIVO</span></h2>
-                <p>El grupo de los 5 de Fondo Sur ha sido interceptado por la Agenda 2030 de Perro Sanxe. <br><br>Con la ayuda (o el estorbo) del <b>DLC Kevin & Ana</b>, debéis sobrevivir a la dictadura climática. ¡A los puestos!</p>
-                <div class="btn-group"><button onclick="startGame()">☢️ INICIAR PROTOCOLO</button></div>
+                <h1>Fondo sur vs los ODS</h1>
+                <h2>DLC Kevin & Ana: Éxodo a Venezuela</h2>
+                <p>Sánchez ha mandado a Zapatero a validar vuestro examen. <br><br>Fondo Sur, tenéis que aprobar los ODS o Maduro os confiscará el móvil y os pondrá a desfilar.</p>
+                <div class="btn-group"><button onclick="startGame()">🗳️ RECONTAR ACTAS</button></div>
             </div>
 
             <div id="question-screen" class="hidden fade-in" style="height:100%; display:flex; flex-direction:column;">
@@ -146,18 +133,18 @@
             <div id="consequence-screen" class="hidden fade-in" style="height:100%; display:flex; flex-direction:column;">
                 <h1 id="c-title"></h1>
                 <p id="c-desc"></p>
-                <div class="btn-group"><button class="btn-next" onclick="nextLevel()">AVANZAR EN EL PLAN ➡️</button></div>
+                <div class="btn-group"><button class="btn-next" onclick="nextLevel()">SIGUIENTE PASO ➡️</button></div>
             </div>
 
             <div id="final-screen" class="hidden fade-in" style="height:100%; display:flex; flex-direction:column;">
-                <h1>🏁 INFORME FINAL</h1>
+                <h1>🏁 ACTA FINAL (132%)</h1>
                 <div id="final-result-content"></div>
-                <div class="btn-group"><button class="btn-next" onclick="resetGame()">🔄 REINICIAR SISTEMA</button></div>
+                <div class="btn-group"><button class="btn-next" onclick="resetGame()">🔄 EXILIARSE Y VOLVER</button></div>
             </div>
         </div>
 
         <div id="leaderboard-wrapper">
-            <h2 style="color:var(--neon-green); font-size: 3vh; text-align:center;">📊 HISTORIAL</h2>
+            <h2 style="color:var(--neon-green); font-size: 2.5vh; text-align:center;">📊 OBSERVADORES</h2>
             <div id="lb-list"></div>
         </div>
     </div>
@@ -166,47 +153,74 @@
         const questions = [
             {
                 title: "ODS 13: ACCIÓN CLIMÁTICA",
-                desc: "Sánchez viaja en Falcon para inaugurar un carril bici en Fondo Sur. ¿Cuál es el objetivo de este ODS?",
+                desc: "Maduro dice que el cambio climático es un invento del imperio, pero el ODS 13 dice otra cosa. ¿Qué hay que hacer urgentemente?",
                 options: [
-                    { text: "Reducir emisiones un 45% para 2030", points: 50, cons: "¡Correcto! Kevin dice que él reduce sus emisiones no respirando cuando pasa Perro Sanxe cerca." },
-                    { text: "Prohibir los mecheros en Fondo Sur", points: -20, cons: "Incorrecto. Eso solo aumentaría la tasa de criminalidad por falta de nicotina. Sanxe te penaliza." },
-                    { text: "Que el Falcon sea eléctrico", points: -50, cons: "Utopía pura. Has gastado todo el presupuesto en baterías que no funcionan. El clima empeora." }
+                    { text: "Adoptar medidas urgentes para combatir el cambio climático", points: 50, cons: "¡Correcto! Sánchez te da un bono cultural. Kevin dice que él ya combate el calor bebiendo cerveza fría." },
+                    { text: "Quemar las actas para que haga calorcito", points: -100, cons: "¡DESASTRE! Has seguido el manual del dictador. El CO2 ha subido tanto que Fondo Sur ahora es un horno." },
+                    { text: "Que Ana sople muy fuerte hacia el Norte", points: 10, cons: "Poco efectivo, pero Ana lo ha dado todo. El clima sigue igual, pero ella está mareada." }
                 ]
             },
             {
-                title: "ODS 14: VIDA SUBMARINA",
-                desc: "Ana encuentra una botella de gintonic flotando en el mar. ¿Qué dice el ODS 14 sobre la contaminación marina?",
+                title: "ODS 13: EDUCACIÓN AMBIENTAL",
+                desc: "Para salvar el planeta hay que mejorar la educación y la sensibilización. ¿Qué meta es real?",
                 options: [
-                    { text: "Prevenir y reducir la contaminación para 2025", points: 50, cons: "¡Bien! Ana ha reciclado la botella (después de terminársela). Fondo Sur salva los océanos." },
-                    { text: "Enseñar a los delfines a votar al PSOE", points: -30, cons: "Eso no está en la agenda... todavía. Los delfines están confundidos y el ecosistema colapsa." },
-                    { text: "Privatizar el agua de los cubitos", points: 10, cons: "Interesante propuesta capitalista, pero los peces siguen muriendo por el plástico." }
+                    { text: "Mejorar la educación y la capacidad humana e institucional", points: 50, cons: "¡Bingo! Fondo Sur ahora tiene conciencia ecológica. Kevin ha dejado de tirar los chicles al suelo." },
+                    { text: "Ver 'Aló Presidente' 24 horas al día", points: -30, cons: "Has perdido neuronas y el planeta sigue calentándose. Maduro está orgulloso, nosotros no." },
+                    { text: "Hacer un TikTok bailando frente a un incendio", points: -50, cons: "Cringe nivel Dios. El planeta se autodestruye por tu culpa." }
                 ]
             },
             {
-                title: "ODS 15: VIDA TERRESTRE",
-                desc: "El desierto llega a Fondo Sur. ¿Cuál es la meta contra la desertificación?",
+                title: "ODS 14: PLÁSTICOS MARINOS",
+                desc: "El mar está lleno de basura. ¿Cuál es el objetivo principal del ODS 14 para 2025?",
                 options: [
-                    { text: "Luchar contra la desertificación y restaurar tierras", points: 50, cons: "¡Exacto! Kevin y Ana están plantando cactus para disimular. Un éxito de biodiversidad." },
-                    { text: "Pintar el suelo de verde", points: -40, cons: "Parece un campo de fútbol de tercera. Los linces ibéricos se han reído de ti antes de extinguirse." },
-                    { text: "Exportar arena a Dubái", points: 0, cons: "Buen negocio, pero el ODS dice que hay que cuidar el suelo, no venderlo por wallapop." }
+                    { text: "Prevenir y reducir significativamente la contaminación marina", points: 50, cons: "¡Bien! Habéis sacado tres redes y una bota vieja del mar. Ana dice que la bota es vintage y se la queda." },
+                    { text: "Hacer islas de plástico para exiliar a la oposición de derechas", points: -40, cons: "Muy creativo pero ilegal. Los peces ahora tienen microplásticos y Sánchez te quita el carnet." },
+                    { text: "Echarle la culpa a los cruceros de jubilados", points: 10, cons: "Tienen parte de culpa, pero no limpia el océano. Fondo Sur suspende en ecología." }
+                ]
+            },
+            {
+                title: "ODS 15: BIODIVERSIDAD TERRESTRE",
+                desc: "Estamos perdiendo especies más rápido que Maduro pierde aliados y Sanchez votantes. ¿Qué busca proteger el ODS 15?",
+                options: [
+                    { text: "Gestionar bosques, luchar contra desertificación y detener pérdida de biodiversidad", points: 50, cons: "¡Correcto! Habéis salvado un bosque. Kevin ha intentado hacerse una casa en un árbol." },
+                    { text: "Convertir el Amazonas en un parking para el Falcon", points: -60, cons: "Sánchez te aplaude, pero el mundo se queda sin oxígeno. Muy mal, Fondo Sur." },
+                    { text: "Que Ana solo use plantas de plástico", points: -20, cons: "Eso no es biodiversidad, es decoración barata. Has matado a un koala de tristeza." }
                 ]
             },
             {
                 title: "ODS 16: PAZ Y JUSTICIA",
-                desc: "Kevin intenta registrar 'Fondo Sur' como nación independiente. ¿Qué busca este ODS?",
+                desc: "En Venezuela el recuento de votos fue 'curioso'. ¿Qué promueve realmente el ODS 16?",
                 options: [
-                    { text: "Promover sociedades pacíficas e instituciones sólidas", points: 50, cons: "Correcto. Aunque una institución sólida con los 5 de Fondo Sur suena a milagro de Navidad." },
-                    { text: "Amnistía para todos (Versión Sánchez)", points: -100, cons: "Te has pasado de frenada política. La justicia colapsa y Fondo Sur es ahora una anarquía total." },
-                    { text: "Que Ana sea la Jueza Suprema", points: 20, cons: "Habría mucha paz, pero la justicia se basaría en quién trae mejores aperitivos. Institución dudosa." }
+                    { text: "Promover sociedades pacíficas, justicia para todos e instituciones eficaces", points: 50, cons: "¡Exacto! Justicia real, no de la que se inventan en Caracas. Fondo Sur se vuelve democrático." },
+                    { text: "Ganar las elecciones con el 130% de los votos", points: -100, cons: "Matemáticas nivel Maduro. Has provocado una manifestación en el salón de Ana." },
+                    { text: "Que fondo sur controle la policía", points: 20, cons: "Habría mucha paz porque todo el mundo estaría de fiesta, pero cero justicia." }
                 ]
             },
             {
-                title: "ODS 17: ALIANZAS GLOBALES",
-                desc: "Los 5 de Fondo Sur firman un pacto con Kevin & Ana (DLC). ¿Cuál es la clave del ODS 17?",
+                title: "ODS 16: CORRUPCIÓN",
+                desc: "Para que un país funcione, hay que acabar con el 'trapicheo' institucional. ¿Cuál es la meta?",
                 options: [
-                    { text: "Revitalizar la Alianza Mundial para el Desarrollo", points: 50, cons: "¡Felicidades! La alianza es total. Sánchez os invita a una ronda (con vuestro dinero)." },
-                    { text: "Compartir la cuenta del Prime Video", points: -10, cons: "Eso es piratería internacional. La ONU os ha puesto en la lista negra de cooperantes." },
-                    { text: "Hacer un grupo de WhatsApp infinito", points: -20, cons: "Eso solo genera caos y notificaciones. La alianza muere por falta de batería." }
+                    { text: "Reducir considerablemente la corrupción y el soborno", points: 50, cons: "¡Correcto! Has limpiado las instituciones. Sánchez te mira con sospecha." },
+                    { text: "Cobrar comisión por cada gramo proveniente de Fondo Sur", points: -10, cons: "Eso es corrupción de barrio. El ODS 16 te manda a la cárcel de papel." },
+                    { text: "Llamar a Zapatero para que medie", points: -40, cons: "Zapatero dice que todo está bien mientras el país se hunde. No has solucionado nada." }
+                ]
+            },
+            {
+                title: "ODS 17: ALIANZAS Y DATOS",
+                desc: "Para medir si los ODS funcionan, necesitamos datos fiables. ¿Qué pide este ODS?",
+                options: [
+                    { text: "Aumentar la disponibilidad de datos oportunos, fiables y de alta calidad", points: 50, cons: "¡Bien! Datos de verdad, no actas escritas a boli por Maduro. Fondo Sur es ahora un centro de datos." },
+                    { text: "Inventarse los números según quien gobierne", points: -50, cons: "Has suspendido. No puedes decir que las pensiones son sostenibles. Los gen z te funan en twetter" },
+                    { text: "Que Kevin cuente los puntos con los dedos", points: 0, cons: "Kevin se ha perdido al llegar a diez. La alianza global ha fracasado por falta de cálculo." }
+                ]
+            },
+            {
+                title: "ODS 17: ALIANZA FONDO SUR-Special DLC",
+                desc: "Habéis llegado al final. Para salvar el mundo, Fondo Sur tiene que aliarse con Kevin y Ana. ¿Qué es fundamental aquí?",
+                options: [
+                    { text: "Fomentar y promover la constitución de alianzas eficaces", points: 100, cons: "¡ALIANZA TOTAL! Habéis salvado la Agenda 2030. Sánchez os deja el Falcon para ir de cena." },
+                    { text: "Hacer un grupo de WhatsApp(estara siempre muteado)", points: -20, cons: "La alianza ha muerto por falta de comunicación. El mundo explota." },
+                    { text: "Pedirle asilo político a Maduro", points: -200, cons: "Has tomado la peor decisión de la historia. Ahora estan en prision con el y P Diddy. Cuidado en la ducha. Game Over." }
                 ]
             }
         ];
@@ -238,8 +252,10 @@
 
         function selectOption(o) {
             score += o.points;
-            document.getElementById('current-score').innerText = score;
-            document.getElementById('c-title').innerText = o.points >= 40 ? "¡OBJETIVO CUMPLIDO!" : "¡SABOTAJE CLIMÁTICO!";
+            // Hack para el humor de Maduro: mostrar puntuaciones absurdas
+            document.getElementById('current-score').innerText = score > 100 ? "132" : Math.abs(score);
+            
+            document.getElementById('c-title').innerText = o.points >= 40 ? "¡DEMOCRACIA VIVA!" : "¡GOLPE DE ESTADO!";
             document.getElementById('c-desc').innerText = o.cons;
             showScreen('consequence-screen');
         }
@@ -258,14 +274,14 @@
             attempt++;
             showScreen('final-screen');
             let rank = "";
-            if (score >= 200) rank = "COMISARIOS DE LA AGENDA 🇪🇺";
-            else if (score >= 50) rank = "DISIDENTES DEL FALCON 🛩️";
-            else rank = "CANDIDATOS AL EXILIO 💀";
+            if (score >= 400) rank = "PRESIDENTE LEGÍTIMO 🇻🇪";
+            else if (score >= 150) rank = "OBSERVADOR INTERNACIONAL 🧐";
+            else rank = "CILITA FLORES 💀";
 
             document.getElementById('final-result-content').innerHTML = `
                 <h2 style="font-size:5vh; color:var(--neon-green);">${rank}</h2>
-                <p>PUNTUACIÓN ODS: ${score}</p>
-                <p style="font-size:2vh;">Kevin y Ana han sobrevivido al DLC. Fondo Sur sigue siendo zona catastrófica.</p>
+                <p>PUNTOS (SEGÚN EL CNE): ${score + 1000}</p>
+                <p style="font-size:2vh;">Fondo Sur sobrevive. Kevin y Ana piden asilo en la cocina de Sánchez.</p>
             `;
             updateLeaderboard();
         }
@@ -274,7 +290,7 @@
             const list = document.getElementById('lb-list');
             const item = document.createElement('div');
             item.className = 'lb-item fade-in';
-            item.innerHTML = `<span>Run #${attempt}</span> <span>${score} PTS</span>`;
+            item.innerHTML = `<span>Fraude #${attempt}</span> <span>${score + 500} pts</span>`;
             list.prepend(item);
         }
 
